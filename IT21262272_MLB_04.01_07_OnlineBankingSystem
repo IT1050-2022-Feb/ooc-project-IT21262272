@@ -1,0 +1,182 @@
+// IT21262272_Nissanka D.N.A.D.C.M
+
+
+// main.cpp (team contributions) 
+
+#include <iostream>
+#include <cstring>
+#include "guestUser.h"
+#include "Customer.h"
+#include "Employee.h"
+#include "Loan.h"
+#include "Leasing.h"
+#include "Paysheet.h"
+#include "Card.h"
+#include "VehicleDetails.h"
+#include "Manager.h"
+
+using namespace std;
+
+int main (void)
+{
+    //Creating Objects
+    guestUser* m_Gestuser = new guestUser(); //Object - guestUser
+    Customer* m_Customer = new Customer(); //Object - Customer
+    Employee* m_Employee = new Employee(); //Object - Employee
+    Loan* m_Loan = new Loan(); //Object - Loan
+    Leasing* m_Leasing = new Leasing(); //Object - Leasing
+    Paysheet* m_Paysheet = new Paysheet(); //Object - Paysheet
+    Card* m_Card = new Card(); //Object – Card
+    vehicleDetails* m_VehicleDetails = new vehicleDetails(); //Object - VehicleDetails
+
+    //Methods Calling 
+    m_Gestuser->registerUser();
+    m_Gestuser->searchServices();
+    m_Gestuser->displayDetails();
+
+    m_Customer->login();
+    m_Customer->displayDetails();
+    m_Customer->payBills();
+    m_Customer->applyCards();
+    m_Customer->applyLoans();
+    m_Customer->applyLeasing();
+    m_Customer->openBankAccount();
+    m_Customer->TransferMoney();
+    m_Customer->logout();
+
+   
+    m_Employee->displayDetails();
+    m_Employee->approveCard();
+    m_Employee->checkLoan();
+    m_Employee->checkLeaing();
+    m_Employee->approveAccount();
+    m_Employee->addAccount();
+
+    m_Loan->LoanAmount();
+    m_Loan->TimePeriod();
+    m_Loan->displayLoanDetails();
+
+    m_Leasing->LeasingAmount ();
+    m_Leasing->LeasingPeriod ();
+    m_Leasing->displayLeasingDetails ();
+
+    m_Card->displayCardDetails();
+
+    m_Paysheet->addPaysheetDetails();
+
+    m_VehicleDetails->addVehicleDetails();
+
+    //Delete Dynamic Objects 
+    delete m_Gestuser;
+    delete m_Customer;
+    delete m_Employee;
+    delete m_Loan;
+    delete m_Leasing;
+    delete m_Paysheet;
+    delete m_Card;
+    delete m_VehicleDetails;
+
+    return 0;
+}
+
+// Payment.h
+
+class Payment
+{
+private:
+    int PayID;
+    char PayType[20];
+    float PayAmount;
+
+    
+public:
+    Payment();
+    Payment(int pID, const char pType[], float pAmount);
+    void checkPayment();
+    void confirmPayment();
+    void displayPaymentDetails();
+    ~Payment();
+};
+
+
+
+//Payment.cpp
+
+#include "Payment.h"
+#include <cstring>
+
+//Default Constructor
+Payment::Payment()
+{
+    PayID = 0;
+    strcpy(PayType,"");
+    PayAmount = 0;
+}
+
+//Default Constructor with parameters 
+Payment::Payment(int pID, const char pType[], float pAmount)
+{
+    PayID = pID;
+    strcpy(PayType, pType);
+    PayAmount = pAmount;
+}
+
+void Payment::checkPayment()
+{}
+
+void Payment::confirmPayment()
+{}
+
+void Payment::displayPaymentDetails()
+{}
+
+//Destructor
+Payment::~Payment()
+{}
+
+
+
+// Account.h
+
+class Account 
+{
+    private: 
+        int accountNumber;
+        char accType[10];
+        float accBalance;
+    public :
+      Account();
+      Account(int accNo, const char acc_type[], float accBal);
+      float calculateBalance();
+      void displayDetals();
+~Account();
+};
+
+// Account.cpp
+
+#include "Account.h"
+#include <cstring>
+
+//Default Constructor 
+Account::Account()
+{
+    accountNumber=0;
+    strcpy(accType,"");
+    accBalance=0;
+}
+
+//Constructor with parameters
+Account::Account(int accNo, const char acc_type[], float accBal)
+{
+    accountNumber=accNo;
+    strcpy(accType,acc_type);
+    accBalance=accBal;
+}
+float Account::calculateBalance()
+{}
+void Account::displayDetals()
+{}
+Account::~Account()
+{}
+
+
