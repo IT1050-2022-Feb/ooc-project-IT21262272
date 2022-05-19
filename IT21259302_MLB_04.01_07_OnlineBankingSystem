@@ -1,0 +1,256 @@
+//IT21259302_Narasinghe N.M.N.N.
+
+//main.cpp (team contributions)
+
+//Main.cpp
+#include <iostream>
+#include <cstring>
+#include "guestUser.h"
+#include "Customer.h"
+#include "Employee.h"
+#include "Loan.h"
+#include "Leasing.h"
+#include "Paysheet.h"
+#include "Card.h"
+#include "VehicleDetails.h"
+#include "Manager.h"
+
+using namespace std;
+
+int main (void)
+{
+    //Creating Objects
+    guestUser* m_Gestuser = new guestUser(); //Object - guestUser
+    Customer* m_Customer = new Customer(); //Object - Customer
+    Employee* m_Employee = new Employee(); //Object - Employee
+    Loan* m_Loan = new Loan(); //Object - Loan
+    Leasing* m_Leasing = new Leasing(); //Object - Leasing
+    Paysheet* m_Paysheet = new Paysheet(); //Object - Paysheet
+    Card* m_Card = new Card(); //Object – Card
+    vehicleDetails* m_VehicleDetails = new vehicleDetails(); //Object - VehicleDetails
+
+    //Methods Calling 
+    m_Gestuser->registerUser();
+    m_Gestuser->searchServices();
+    m_Gestuser->displayDetails();
+
+    m_Customer->login();
+    m_Customer->displayDetails();
+    m_Customer->payBills();
+    m_Customer->applyCards();
+    m_Customer->applyLoans();
+    m_Customer->applyLeasing();
+    m_Customer->openBankAccount();
+    m_Customer->TransferMoney();
+    m_Customer->logout();
+
+   
+    m_Employee->displayDetails();
+    m_Employee->approveCard();
+    m_Employee->checkLoan();
+    m_Employee->checkLeaing();
+    m_Employee->approveAccount();
+    m_Employee->addAccount();
+
+    m_Loan->LoanAmount();
+    m_Loan->TimePeriod();
+    m_Loan->displayLoanDetails();
+
+    m_Leasing->LeasingAmount ();
+    m_Leasing->LeasingPeriod ();
+    m_Leasing->displayLeasingDetails ();
+
+    m_Card->displayCardDetails();
+
+    m_Paysheet->addPaysheetDetails();
+
+    m_VehicleDetails->addVehicleDetails();
+
+    //Delete Dynamic Objects 
+    delete m_Gestuser;
+    delete m_Customer;
+    delete m_Employee;
+    delete m_Loan;
+    delete m_Leasing;
+    delete m_Paysheet;
+    delete m_Card;
+    delete m_VehicleDetails;
+
+    return 0;
+}
+
+
+//Employee.h
+  #include "Card.h"
+  #include "Loan.h"
+  #include "Customer.h"
+  #include "Leasing.h"
+
+  #define SIZE3 2
+  #define SIZE4 2
+  #define SIZE5 2
+  #define SIZE6 2
+
+  class Employee
+  {
+  Private:
+      int countOfCards;
+           int      countOfLoans;
+           int      countOfLeasings;
+           int       countOfAccounts;
+
+
+  protected:
+      int EmpId;
+      char EmpName[50];
+      char EmpAddres[100];
+      char EmpEmail[50];
+      char EmpNIC[20];
+      char EmpPhone[10];
+
+      Card* crd[SIZE3];
+      Loan* loan[SIZE4];
+      Customer* Cust[SIZE5];
+      Leasing* leas[SIZE6];
+
+
+  public:
+      Employee();
+      Employee(int eId, const char eName[], const char eAddress[], const char eEmail[], const char eNIC[], const char ePhone[]);
+      void displayDetails();
+      void approveCard(Card *ecrd);
+      void checkLoan(Loan *eloan);
+      void checkLeaing(Leasing *eleas);
+      void addAccount(Customer *ecust);
+      ~Employee();
+
+  };
+
+
+//Employee.cpp
+  #include "Employee.h"
+  #include "Card.h"
+  #include "Loan.h"
+  #include "Leasing.h"
+  #include "Customer.h"
+
+  #include <cstring>
+
+  Employee::Employee()
+  {
+      EmpId = 0;
+      strcpy(EmpName,"");
+      strcpy(EmpAddres,"");
+      strcpy(EmpEmail,"");
+      strcpy(EmpNIC,"");
+      strcpy(EmpPhone, "");
+
+      countOfcards = 0;
+           countOfLoans= 0;
+           countOfLeasings = 0;
+           countOfAccounts = 0;
+
+  }
+
+  Employee::Employee(int eId, const char eName[], const char eAddress[], const char eEmail[], const char eNIC[], const char ePhone[])
+  {
+      EmpId = eId;
+      strcpy(EmpName, eName);
+      strcpy(EmpAddres, eAddress);
+      strcpy(EmpEmail, eEmail);
+      strcpy(EmpNIC, eNIC);
+      strcpy(EmpPhone, ePhone);
+
+  }
+
+  void Employee::displayDetails()
+  {
+  }
+
+  void Employee::approveCard(Card *ecrd)
+  {
+    if (countOfcards < SIZE3)
+   { 
+  crd[countOfcards] = ecrd; 
+  countOfcards++;
+                  }
+  }
+
+  void Employee::checkLoan(Loan *eloan)
+  {
+    if (countOfLoans < SIZE4)
+   { 
+  loan[countOfLoans] = eloan; 
+  countOfLoans ++;
+                  }
+
+  }
+
+  void Employee::checkLeaing(Leasing *eleas)
+  {
+    if (countOfLeasings < SIZE6)
+   { 
+  loan[countOfLeasings] = eleas; 
+  countOfLeasings ++;
+                  }
+
+  }
+
+  void Employee::addAccount(Customer *ecust)
+  {
+    if (countOfAccounts < SIZE5)
+   { 
+  loan[countOfAccounts] = eleas; 
+  countOfAccounts ++;
+                  }
+
+  }
+
+  Employee::~Employee()
+  {
+  }
+
+
+
+//Manager.h
+
+  #include "Employee.h"
+
+  class Manager :public Employee //Manager --> Derived class from base class Employee
+  {
+  public:
+      Manager();
+      Manager(int eId, const char eName[], const char eAddress[], const char eEmail[], const char eNIC[], const char ePhone[]);
+      void approveLoan();
+      void approveLeasing();
+      ~Manager();
+  };
+
+
+//Manager.cpp
+
+  #include "Manager.h"
+
+  //Default Constructor
+  Manager::Manager()
+  {
+  }
+
+  //Constructor with parameters
+  Manager::Manager(int eId, const char eName[], const char eAddress[], const char eEmail[], const char eNIC[], const char ePhone[])
+  {
+  }
+
+  void Manager::approveLoan()
+  {
+  }
+
+  void Manager::approveLeasing()
+  {
+  }
+
+  //Destructor
+  Manager::~Manager()
+  {
+  }
+
