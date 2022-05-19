@@ -1,0 +1,238 @@
+// IT21259470_Pehesarani W.K.A
+
+// main.cpp (team contributions)
+
+  #include <iostream>
+  #include <cstring>
+  #include "guestUser.h"
+  #include "Customer.h"
+  #include "Employee.h"
+  #include "Loan.h"
+  #include "Leasing.h"
+  #include "Paysheet.h"
+  #include "Card.h"
+  #include "VehicleDetails.h"
+  #include "Manager.h"
+
+  using namespace std;
+
+  int main (void)
+  {
+      //Creating Objects
+      guestUser* m_Gestuser = new guestUser(); //Object - guestUser
+      Customer* m_Customer = new Customer(); //Object - Customer
+      Employee* m_Employee = new Employee(); //Object - Employee
+      Loan* m_Loan = new Loan(); //Object - Loan
+      Leasing* m_Leasing = new Leasing(); //Object - Leasing
+      Paysheet* m_Paysheet = new Paysheet(); //Object - Paysheet
+      Card* m_Card = new Card(); //Object – Card
+      vehicleDetails* m_VehicleDetails = new vehicleDetails(); //Object - VehicleDetails
+
+      //Methods Calling 
+      m_Gestuser->registerUser();
+      m_Gestuser->searchServices();
+      m_Gestuser->displayDetails();
+
+      m_Customer->login();
+      m_Customer->displayDetails();
+      m_Customer->payBills();
+      m_Customer->applyCards();
+      m_Customer->applyLoans();
+      m_Customer->applyLeasing();
+      m_Customer->openBankAccount();
+      m_Customer->TransferMoney();
+      m_Customer->logout();
+
+
+      m_Employee->displayDetails();
+      m_Employee->approveCard();
+      m_Employee->checkLoan();
+      m_Employee->checkLeaing();
+      m_Employee->approveAccount();
+      m_Employee->addAccount();
+
+      m_Loan->LoanAmount();
+      m_Loan->TimePeriod();
+      m_Loan->displayLoanDetails();
+
+      m_Leasing->LeasingAmount ();
+      m_Leasing->LeasingPeriod ();
+      m_Leasing->displayLeasingDetails ();
+
+      m_Card->displayCardDetails();
+
+      m_Paysheet->addPaysheetDetails();
+
+      m_VehicleDetails->addVehicleDetails();
+
+      //Delete Dynamic Objects 
+      delete m_Gestuser;
+      delete m_Customer;
+      delete m_Employee;
+      delete m_Loan;
+      delete m_Leasing;
+      delete m_Paysheet;
+      delete m_Card;
+      delete m_VehicleDetails;
+
+      return 0;
+  }
+
+// Paysheet.h
+
+  #include "Loan.h"
+  #include "Leasing.h"
+  #include "Card.h"
+  #include "Customer.h"
+
+  class Paysheet
+  {
+      private:
+          char Name[50];
+          char NIC[15];
+          float salary;
+
+          Customer *Cust;
+          Loan *loan;
+          Leasing *leas;
+          Card *crd;
+
+      public:
+          Paysheet();
+          Paysheet(Customer *ccust, Loan *cloan, Leasing *cleas, Card *ccrd, const char custName[], const char custNIC[], float custSalary);
+          void addPaysheetDetails();
+          ~Paysheet();
+  };
+
+// Paysheet.cpp
+
+  #include "Paysheet.h"
+  #include <cstring>
+
+  //Default Constructor
+  Paysheet::Paysheet()
+  {
+      strcpy(Name, "");
+      strcpy(NIC, "");
+      salary = 0;
+  }
+
+  //Constructor with parameters
+  Paysheet::Paysheet(Customer *ccust, Loan *cloan, Leasing *cleas, Card *ccrd, const char custName[], const char custNIC[], float custSalary)
+  {
+      Cust = ccust;
+      loan = cloan;
+      leas = cleas;
+      crd = ccrd;
+      strcpy(Name,custName);
+      strcpy(NIC,custNIC);
+      salary = custSalary;
+  }
+  void Paysheet::addPaysheetDetails()
+  {}
+
+  //Destructor
+  Paysheet::~Paysheet()
+  {}
+
+// VehicleDetails.h
+
+  #include "Customer.h"
+  #include "Leasing.h"
+
+  class vehicleDetails
+  {
+      private:
+          char vehicleNumber[10];
+          char vehicleType[10];
+          char owner[20];
+
+          Customer *Cust;
+          Leasing *leas;
+
+      public:
+          vehicleDetails();
+          vehicleDetails(Customer *vcust, Leasing *vleas, const char vNumber[], const char vType[], const char vOwner[]);
+          void addVehicleDetails();
+          ~vehicleDetails();
+  };
+
+
+// VehicleDetails.cpp
+
+  #include "VehicleDetails.h"
+  #include <cstring>
+
+  //Default Constructor
+  vehicleDetails::vehicleDetails()
+      {
+          strcpy(vehicleNumber, "");
+          strcpy(vehicleType, "");
+          strcpy(owner, "");
+      }
+
+  //Constructor with parameters 
+  vehicleDetails::vehicleDetails(Customer *vcust, Leasing *vleas, const char vNumber[], const char vType[], const char vOwner[])
+      {
+          strcpy(vehicleNumber,vNumber);
+          strcpy(vehicleType,vType);
+          strcpy(owner, vOwner);
+
+          Cust = vcust;
+          leas = vleas;
+      }
+  void vehicleDetails::addVehicleDetails()
+  {}
+
+  //Destructor
+  vehicleDetails::~vehicleDetails()
+  {}
+  
+// Card.h
+  
+  class Card
+  {
+      private:
+          int CardNo;
+          char CardType[2];
+          char ExpDate[12];
+          Customer *Cust;
+      public:
+          Card();
+          Card(int cNo, const char cType[], const char cDate[],Customer *cust);
+          void displayCardDetails();
+          ~Card();
+  };
+
+ //Card.cpp
+
+  #include "Card.h"
+  #include <cstring>
+
+  //Default Constructor
+  Card::Card()
+  {
+      CardNo = 0;
+      strcpy(CardType,"");
+      strcpy(ExpDate, "");
+  }
+
+  //Constructor with parameters
+  Card::Card(int cNo, const char cType[], const char cDate[],Customer *cust)
+  {
+      CardNo = cNo;
+      strcpy(CardType,cType);
+      strcpy(ExpDate,cDate);
+
+      Cust = cust;
+  }
+  void Card::displayCardDetails()
+  {}
+
+  //Destructor
+  Card::~Card()
+  {}
+
+  
+  
+
