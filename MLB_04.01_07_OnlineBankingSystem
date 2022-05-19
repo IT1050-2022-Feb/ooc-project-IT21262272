@@ -1,0 +1,179 @@
+//IT21259616_Sanjula R.A.K.
+
+//main.cpp (team contributions)
+
+#include <iostream>
+#include <cstring>
+#include "guestUser.h"
+#include "Customer.h"
+#include "Employee.h"
+#include "Loan.h"
+#include "Leasing.h"
+#include "Paysheet.h"
+#include "Card.h"
+#include "VehicleDetails.h"
+#include "Manager.h"
+
+using namespace std;
+
+int main (void)
+{
+    //Creating Objects
+    guestUser* m_Gestuser = new guestUser(); //Object - guestUser
+    Customer* m_Customer = new Customer(); //Object - Customer
+    Employee* m_Employee = new Employee(); //Object - Employee
+    Loan* m_Loan = new Loan(); //Object - Loan
+    Leasing* m_Leasing = new Leasing(); //Object - Leasing
+    Paysheet* m_Paysheet = new Paysheet(); //Object - Paysheet
+    Card* m_Card = new Card(); //Object – Card
+    vehicleDetails* m_VehicleDetails = new vehicleDetails(); //Object - VehicleDetails
+
+    //Methods Calling 
+    m_Gestuser->registerUser();
+    m_Gestuser->searchServices();
+    m_Gestuser->displayDetails();
+
+    m_Customer->login();
+    m_Customer->displayDetails();
+    m_Customer->payBills();
+    m_Customer->applyCards();
+    m_Customer->applyLoans();
+    m_Customer->applyLeasing();
+    m_Customer->openBankAccount();
+    m_Customer->TransferMoney();
+    m_Customer->logout();
+
+   
+    m_Employee->displayDetails();
+    m_Employee->approveCard();
+    m_Employee->checkLoan();
+    m_Employee->checkLeaing();
+    m_Employee->approveAccount();
+    m_Employee->addAccount();
+
+    m_Loan->LoanAmount();
+    m_Loan->TimePeriod();
+    m_Loan->displayLoanDetails();
+
+    m_Leasing->LeasingAmount ();
+    m_Leasing->LeasingPeriod ();
+    m_Leasing->displayLeasingDetails ();
+
+    m_Card->displayCardDetails();
+
+    m_Paysheet->addPaysheetDetails();
+
+    m_VehicleDetails->addVehicleDetails();
+
+    //Delete Dynamic Objects 
+    delete m_Gestuser;
+    delete m_Customer;
+    delete m_Employee;
+    delete m_Loan;
+    delete m_Leasing;
+    delete m_Paysheet;
+    delete m_Card;
+    delete m_VehicleDetails;
+
+    return 0;
+}
+
+//Loan.h
+
+#include"Customer.h"
+#include"Employee.h"
+
+
+class Loan
+{
+    private:
+        int loanID;
+        char loanType[15];
+        Customer *Cust;
+        Employee *Emp;
+    public:
+        Loan();
+        Loan(int LNo, const char LType[], Customer *Lcust, Employee *LEmp);
+        void LoanAmount();
+        void TimePeriod();
+        void displayLoanDetails();
+        ~Loan();
+};
+
+//Loan.cpp
+
+#include "Loan.h"
+#include <cstring>
+
+Loan::Loan()
+{
+    loanID = 0;
+    strcpy(loanType,"");
+}
+Loan::Loan(int LNo, const char LType[], Customer *Lcust, Employee *LEmp)
+{
+    loanID = LNo;
+    strcpy(loanType,LType);
+    cust = Lcust;
+}
+void Loan::LoanAmount()
+{}
+
+void Loan::TimePeriod()
+{}
+
+void Loan::displayLoanDetails()
+{}
+
+Loan::~Loan()
+{}
+
+//Leasing.h
+
+#include "Customer.h"
+#include "Employee.h"
+
+class Leasing
+{
+    private:
+        int LeasingID;
+        char LeasingType[15];
+        Customer *Cust;
+        Employee *Emp;
+    public:
+        Leasing ();
+        Leasing (int Lid, const char Ltype[], Customer *Lcust, Employee *LEmp);
+        void LeasingAmount ();
+        void LeasingPeriod ();
+        void displayLeasingDetails ();
+        ~Leasing();
+};
+
+//Leasing.cpp
+
+#include "Leasing.h"
+#include <cstring>
+
+Leasing::Leasing()
+{
+    LeasingID = 0;
+    strcpy(LeasingType,"");
+}
+Leasing::Leasing(int Lid, const char Ltype[], Customer *Lcust, Employee *LEmp)
+{
+    LeasingID = Lid;
+    strcpy(LeasingType,Ltype);
+    cust = Lcust;
+    Emp = LEmp;
+}
+void Leasing::LeasingAmount()
+{}
+
+void Leasing::LeasingPeriod()
+{}
+
+void Leasing::displayLeasingDetails()
+{}
+
+Leasing::~Leasing()
+{}
