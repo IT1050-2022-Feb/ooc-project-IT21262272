@@ -1,0 +1,254 @@
+IT21258480_Dissanayake D.M.P.D.
+
+  //main.cpp (team contributions)
+
+  #include <iostream>
+  #include <cstring>
+  #include "guestUser.h"
+  #include "Customer.h"
+  #include "Employee.h"
+  #include "Loan.h"
+  #include "Leasing.h"
+  #include "Paysheet.h"
+  #include "Card.h"
+  #include "VehicleDetails.h"
+  #include "Manager.h"
+
+  using namespace std;
+
+  int main (void)
+  {
+      //Creating Objects
+      guestUser* m_Gestuser = new guestUser(); //Object - guestUser
+      Customer* m_Customer = new Customer(); //Object - Customer
+      Employee* m_Employee = new Employee(); //Object - Employee
+      Loan* m_Loan = new Loan(); //Object - Loan
+      Leasing* m_Leasing = new Leasing(); //Object - Leasing
+      Paysheet* m_Paysheet = new Paysheet(); //Object - Paysheet
+      Card* m_Card = new Card(); //Object – Card
+      vehicleDetails* m_VehicleDetails = new vehicleDetails(); //Object - VehicleDetails
+
+      //Methods Calling 
+      m_Gestuser->registerUser();
+      m_Gestuser->searchServices();
+      m_Gestuser->displayDetails();
+
+      m_Customer->login();
+      m_Customer->displayDetails();
+      m_Customer->payBills();
+      m_Customer->applyCards();
+      m_Customer->applyLoans();
+      m_Customer->applyLeasing();
+      m_Customer->openBankAccount();
+      m_Customer->TransferMoney();
+      m_Customer->logout();
+
+
+      m_Employee->displayDetails();
+      m_Employee->approveCard();
+      m_Employee->checkLoan();
+      m_Employee->checkLeaing();
+      m_Employee->approveAccount();
+      m_Employee->addAccount();
+
+      m_Loan->LoanAmount();
+      m_Loan->TimePeriod();
+      m_Loan->displayLoanDetails();
+
+      m_Leasing->LeasingAmount ();
+      m_Leasing->LeasingPeriod ();
+      m_Leasing->displayLeasingDetails ();
+
+      m_Card->displayCardDetails();
+
+      m_Paysheet->addPaysheetDetails();
+
+      m_VehicleDetails->addVehicleDetails();
+
+      //Delete Dynamic Objects 
+      delete m_Gestuser;
+      delete m_Customer;
+      delete m_Employee;
+      delete m_Loan;
+      delete m_Leasing;
+      delete m_Paysheet;
+      delete m_Card;
+      delete m_VehicleDetails;
+
+      return 0;
+  }
+
+
+  //guestUser.h
+  class guestUser
+  {
+      protected : 
+          int custID;
+          char custName[50];
+          char custAddress[100];
+          char custEmail[50];
+          char custPhone[10];
+          char custNIC[12];
+          char DOB[12];
+      public :
+          guestUser();
+          guestUser(int CID, const char c_Name[], const char c_Address[], const char c_Email[], const char c_Phone[], const char c_NIC[], const char dob[]);
+          void registerUser();
+          void searchServices();
+          void displayDetails();
+          ~guestUser();
+  };
+
+  //guestUser.cpp
+  #include "guestUser.h"
+  #include <cstring>
+
+  //Default Constructor 
+  guestUser::guestUser()
+  {
+      custID=0;
+      strcpy(custName,"");
+      strcpy(custAddress,"");
+      strcpy(custEmail,"");
+      strcpy(custPhone,"");
+      strcpy(custNIC,"");
+      strcpy(DOB,"");
+  }
+
+  //Constructor with parameters
+  guestUser::guestUser(int CID, const char c_Name[], const char c_Address[], const char c_Email[], const char c_Phone[], const char c_NIC[], const char dob[])
+  {
+      custID=CID;
+      strcpy (custName,c_Name);
+      strcpy (custAddress,c_Address);
+      strcpy (custEmail,c_Email);
+      strcpy (custPhone,c_Phone);
+      strcpy (custNIC,c_NIC);
+      strcpy (DOB,dob);
+  }
+
+  void guestUser::registerUser()
+  {}
+  void guestUser::searchServices()
+  {}
+  void guestUser::displayDetails()
+  {}
+
+  //Destructor
+  guestUser::~guestUser()
+  {}
+
+  //Customer.h
+  #define SIZE1 2
+  #define SIZE2 2
+  #define SIZE3 2
+  #include "guestUser.h"
+  #include "Account.h"
+  #include "Payment.h"
+  #include "Card.h"
+  #include "Employee.h"
+
+  class Customer : public guestUser //Customer --> Derived class from base class guestUser
+  {
+      private :	
+          char custUsername[30];
+          char custPassword[8];
+
+      Employee* Emp;
+          Account* Acc[SIZE1];
+          Payment* Pay[SIZE2];
+          Card* crd[SIZE3];
+          int onOfCards;
+
+      public : 
+          Customer();
+  Customer::Customer(const char c_username[], const char c_password[], int acc1_no, const char acc1_type1, float acc1_balance1,int acc2_no,const char acc2_type,float acc2_balance, int p1_ID, char p1_type, float p1_amount, int p2_ID, char p2_type, float p2_amount ,Employee *emp);
+
+          void login();
+          void displayDetails();
+          void payBills();
+          void applyCards(Card *c_crd);
+          void applyLoans();
+          void applyLeasing();
+          void openBankAccount();
+          void TransferMoney();
+          void checkAccountBalance();
+          void logout();
+          ~Customer();
+  };
+
+  //Customer.cpp
+  #include "Customer.h"
+  #include "guestUser.h"
+  #include "Payment.h"
+  #include "Account.h"
+  #include "Card.h"
+  #include <cstring>
+
+
+
+  //Default Constructor
+  Customer::Customer()
+  {
+      strcpy(custUsername,"");
+      strcpy(custPassword,"");
+
+      noOfCards = 0;
+  }
+
+  //Constructor with parameters
+  Customer::Customer(const char c_username[], const char c_password[], int acc1_no, const char acc1_type1, float acc1_balance1,int acc2_no,const char acc2_type,float acc2_balance, int p1_ID, char p1_type, float p1_amount, int p2_ID, char p2_type, float p2_amount ,Employee *emp);
+
+
+  {
+      strcpy(custUsername,c_username);
+      strcpy(custPassword,c_password);
+
+      Acc[0]=new Account(acc1_no, acc1_type1, acc1_balance);
+      Acc[1]=new Account(acc2_no, acc2_type, acc2_balance);
+
+      Pay[0]=new Payment(p1_ID, p1_type, p1_amount);
+      Pay[1]=new Payment(p2_ID, p2_type, p2_amount);
+
+      Emp = emp;
+  }
+  void Customer::login()
+  {}
+  void Customer::displayDetails()
+  {}
+  void Customer::payBills()
+  {}
+  void Customer::applyCards(Card *c_crd)
+  {
+    if (noOfCards < SIZE3)
+   { 
+  crd[noOfCards] = c_crd; 
+  noOfCards++;
+                  }
+  }
+  void Customer::applyLoans()
+  {}
+  void Customer::applyLeasing()
+  {}
+  void Customer::openBankAccount()
+  {}
+  void Customer::TransferMoney()
+  {}
+  void Customer::checkAccountBalance()
+  {}
+  void Customer::logout()
+  {}
+
+  //Destructor
+  Customer::~Customer()
+  {
+      for (int i=0; i<SIZE1; i++)
+      {
+          delete Acc[i];
+      }
+      for (int i=0; i<SIZE2; i++)
+      {
+          delete Pay[i];
+      }
+
+  }
